@@ -1,0 +1,55 @@
+---
+title: "Developing Data Products Week4 Assignment"
+author: "Anita Datta Chowdhury"
+date: "April 24, 2017"
+output: ioslides_presentation
+runtime: shiny
+transition : rotate
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Week 4 Presentation - Developing Data Products
+
+This R Markdown presentation is made interactive using Shiny. 
+
+## Details
+
+The slide contains an inerative app, which allows user to observe the eruption duration. 
+
+> - Select Number of bins 
+> - Adjustment factor
+
+The plot will display the density of eruption duration 
+
+
+## Interactive Plot
+
+```{r eruptions}
+inputPanel(
+  selectInput("n_breaks", label = "Number of bins:",
+              choices = c(10, 20, 35, 50, 60 , 70 , 80, 90, 100), selected = 10),
+  
+  sliderInput("bw_adjust", label = "Bandwidth adjustment:",
+              min = 0.2, max = 2, value = 1, step = 10)
+)
+
+renderPlot({
+  hist(faithful$eruptions, probability = TRUE, breaks = as.numeric(input$n_breaks),
+       xlab = "Duration (minutes)", main = "Geyser eruption duration")
+  
+  dens <- density(faithful$eruptions, adjust = input$bw_adjust)
+  lines(dens, col = "red")
+})
+```
+
+
+## Data Summary
+
+```{r cars}
+summary(cars)
+```
+
+
